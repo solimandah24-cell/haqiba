@@ -271,9 +271,17 @@
   .step h4{ font-family:'Cairo'; font-weight:700; margin-bottom:8px; }
   .step p{ color:var(--ink-soft); font-size:.9rem; line-height:1.8; }
 
-  /* ---------- disqus comments section ---------- */
-  .comments-sec{ padding:90px 0; background:#fff; border-top:1px solid #E7E5DC; }
-  .comments-sec .wrap{ max-width:900px; }
+  /* ---------- COMMENTS SECTION ---------- */
+  .comments-section{ padding:80px 0; background:#fff; border-top:1px solid #E7E5DC; }
+  .comment-box-wrap{
+    max-width: 680px;
+    margin: 0 auto;
+    background: var(--paper);
+    padding: 35px;
+    border-radius: 20px;
+    border: 1px solid #E1DFD5;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.03);
+  }
 
   /* ---------- contact ---------- */
   .contact{ padding:110px 0; background:var(--paper); position:relative; }
@@ -412,7 +420,7 @@
       <a href="#why-us">لماذا نحن؟</a>
       <a href="#about">من نحن</a>
       <a href="#process">آلية العمل</a>
-      <a href="#comments">التعليقات</a>
+      <a href="#comments">شاركونا رأيكم</a>
       <a href="#contact">تواصل معنا</a>
     </nav>
     <a href="https://wa.me/966591266141" target="_blank" class="btn nav-cta">اطلب الآن</a>
@@ -700,28 +708,26 @@
   </div>
 </section>
 
-<!-- ============ COMMENTS (DISQUS) ============ -->
-<section id="comments" class="comments-sec">
+<!-- ============ COMMENTS SECTION (خانة التعليقات والملاحظات) ============ -->
+<section id="comments" class="comments-section">
   <div class="wrap">
-    <p class="kicker">مجتمعنا</p>
-    <h2 class="sec-title reveal">شاركنا رأيك واستفساراتك</h2>
-    <p class="sec-sub reveal">اترك تعليقك أو استفسارك وسنقوم بالرد عليك في أقرب وقت.</p>
-    
-    <!-- Disqus Universal Code -->
-    <div id="disqus_thread"></div>
-    <script>
-        var disqus_config = function () {
-            this.page.url = window.location.href;
-            this.page.identifier = window.location.pathname;
-        };
-        (function() {
-            var d = document, s = d.createElement('script');
-            s.src = 'https://soliman-2.disqus.com/embed.js';
-            s.setAttribute('data-timestamp', +new Date());
-            (d.head || d.body).appendChild(s);
-        })();
-    </script>
-    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <p class="kicker">تعليقات الزوار</p>
+    <h2 class="sec-title reveal">شاركنا رأيك أو استفسارك</h2>
+    <p class="sec-sub reveal">اكتب تعليقك وسيرسل إلينا عبر الواتساب مباشرة دون الحاجة لإنشاء حساب.</p>
+
+    <div class="comment-box-wrap reveal">
+      <form id="commentForm">
+        <div class="field">
+          <label>الاسم الكريم</label>
+          <input type="text" id="commenterName" placeholder="أدخل اسمك هنا..." required>
+        </div>
+        <div class="field">
+          <label>التعليق أو الملاحظة</label>
+          <textarea id="commentText" placeholder="اكتب رأيك أو اقتراحك أو استفسارك هنا..." required></textarea>
+        </div>
+        <button type="submit" class="submit-btn">💬 إرسال التعليق عبر الواتساب</button>
+      </form>
+    </div>
   </div>
 </section>
 
@@ -849,6 +855,20 @@
   const targetPhone = "966591266141";
   const targetEmail = "dahansoliman3@gmail.com";
 
+  // إرسال التعليق أو الملاحظة عبر الواتساب
+  document.getElementById('commentForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const name = document.getElementById('commenterName').value;
+    const comment = document.getElementById('commentText').value;
+
+    const message = `💬 *تعليق/ملاحظة جديدة من موقع حقيبة الطالب:*%0A%0A` +
+                    `👤 *الاسم:* ${encodeURIComponent(name)}%0A` +
+                    `📝 *التعليق:* ${encodeURIComponent(comment)}`;
+
+    window.open(`https://wa.me/${targetPhone}?text=${message}`, '_blank');
+  });
+
+  // إرسال طلب خدمة عبر الواتساب
   document.getElementById('orderForm').addEventListener('submit', function(e) {
     e.preventDefault();
     const name = document.getElementById('custName').value;
@@ -865,6 +885,7 @@
     window.open(`https://wa.me/${targetPhone}?text=${message}`, '_blank');
   });
 
+  // إرسال طلب خدمة عبر البريد
   document.getElementById('emailBtn').addEventListener('click', function() {
     const name = document.getElementById('custName').value;
     const phone = document.getElementById('custPhone').value;
@@ -882,9 +903,6 @@
     window.location.href = `mailto:${targetEmail}?subject=${subject}&body=${body}`;
   });
 </script>
-
-<!-- Disqus Count Script -->
-<script id="dsq-count-scr" src="//soliman-2.disqus.com/count.js" async></script>
 
 </body>
 </html>
