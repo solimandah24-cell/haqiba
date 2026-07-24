@@ -271,7 +271,7 @@
   .step h4{ font-family:'Cairo'; font-weight:700; margin-bottom:8px; }
   .step p{ color:var(--ink-soft); font-size:.9rem; line-height:1.8; }
 
-  /* ---------- COMMENTS SECTION (تعديل كامل ومطور) ---------- */
+  /* ---------- COMMENTS SECTION ---------- */
   .comments-section{ padding:80px 0; background:#fff; border-top:1px solid #E7E5DC; }
   .comment-box-wrap{
     max-width: 720px;
@@ -299,6 +299,13 @@
   .rating-select span.active, .rating-select span:hover, .rating-select span:hover ~ span {
     color: var(--gold);
   }
+
+  .comment-btn-submit{
+    width:100%; background:var(--navy-deep); color:#fff; border:none; padding:16px;
+    border-radius:10px; font-family:'Cairo'; font-weight:700; font-size:1rem; cursor:pointer;
+    transition:background .25s ease; display:flex; align-items:center; justify-content:center; gap:8px;
+  }
+  .comment-btn-submit:hover{ background:var(--gold); color:var(--navy-dark); }
   
   .comments-list {
     margin-top: 30px;
@@ -765,12 +772,12 @@
   </div>
 </section>
 
-<!-- ============ COMMENTS SECTION (قسم التعليقات المعدل والمطور) ============ -->
+<!-- ============ COMMENTS SECTION ============ -->
 <section id="comments" class="comments-section">
   <div class="wrap">
     <p class="kicker">تعليقات الزوار</p>
     <h2 class="sec-title reveal">شاركنا رأيك أو استفسارك</h2>
-    <p class="sec-sub reveal">اكتب تعليقك ليظهر مباشرة في الموقع ومشاركته معنا عبر الواتساب.</p>
+    <p class="sec-sub reveal">اكتب تعليقك ليظهر مباشرة في الموقع هنا.</p>
 
     <div class="comment-box-wrap reveal">
       <form id="commentForm">
@@ -794,7 +801,7 @@
           <label>التعليق أو الملاحظة</label>
           <textarea id="commentText" placeholder="اكتب رأيك أو اقتراحك أو استفسارك هنا..." required></textarea>
         </div>
-        <button type="submit" class="submit-btn">💬 نشر التعليق وإرسال نسخة للواتساب</button>
+        <button type="submit" class="comment-btn-submit">✍️ نشر التعليق على الموقع</button>
       </form>
 
       <!-- شاشة عرض التعليقات -->
@@ -988,7 +995,7 @@
   // عرض التعليقات عند تحميل الصفحة
   renderComments();
 
-  // معالجة تقديم التعليق
+  // معالجة تقديم التعليق (نشر فقط داخل الموقع بدون الواتساب)
   document.getElementById('commentForm').addEventListener('submit', function(e) {
     e.preventDefault();
     const name = document.getElementById('commenterName').value;
@@ -1000,17 +1007,10 @@
     comments.unshift({ name: name, comment: comment, rating: selectedRating, date: today });
     localStorage.setItem('site_comments', JSON.stringify(comments));
 
-    // إتاحة إعادة عرض التعليق مباشرة
+    // إعادة عرض قائمة التعليقات مباشرة
     renderComments();
 
-    // إرسال التعليق عبر الواتساب
-    const starsStr = '★'.repeat(selectedRating);
-    const message = `💬 *تعليق/ملاحظة جديدة من موقع حقيبة الطالب:*%0A%0A` +
-                    `👤 *الاسم:* ${encodeURIComponent(name)}%0A` +
-                    `⭐ *التقييم:* ${encodeURIComponent(starsStr)}%0A` +
-                    `📝 *التعليق:* ${encodeURIComponent(comment)}`;
-
-    window.open(`https://wa.me/${targetPhone}?text=${message}`, '_blank');
+    alert('شكراً لك! تم نشر تعليقك بنجاح.');
 
     // إعادة تعيين الحقول
     document.getElementById('commentForm').reset();
