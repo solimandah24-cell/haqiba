@@ -271,80 +271,16 @@
   .step h4{ font-family:'Cairo'; font-weight:700; margin-bottom:8px; }
   .step p{ color:var(--ink-soft); font-size:.9rem; line-height:1.8; }
 
-  /* ---------- COMMENTS SECTION ---------- */
+  /* ---------- COMMENTS SECTION (CUSDIS INTEGRATED) ---------- */
   .comments-section{ padding:80px 0; background:#fff; border-top:1px solid #E7E5DC; }
   .comment-box-wrap{
-    max-width: 720px;
+    max-width: 800px;
     margin: 0 auto;
     background: var(--paper);
-    padding: 35px;
+    padding: 30px;
     border-radius: 20px;
     border: 1px solid #E1DFD5;
     box-shadow: 0 8px 25px rgba(0,0,0,0.03);
-  }
-  
-  .rating-select {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 18px;
-    direction: ltr;
-    justify-content: flex-end;
-  }
-  .rating-select span {
-    font-size: 1.6rem;
-    cursor: pointer;
-    color: #ccc;
-    transition: color 0.2s ease;
-  }
-  .rating-select span.active, .rating-select span:hover, .rating-select span:hover ~ span {
-    color: var(--gold);
-  }
-
-  .comment-btn-submit{
-    width:100%; background:var(--navy-deep); color:#fff; border:none; padding:16px;
-    border-radius:10px; font-family:'Cairo'; font-weight:700; font-size:1rem; cursor:pointer;
-    transition:background .25s ease; display:flex; align-items:center; justify-content:center; gap:8px;
-  }
-  .comment-btn-submit:hover{ background:var(--gold); color:var(--navy-dark); }
-  
-  .comments-list {
-    margin-top: 30px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-  .comment-item {
-    background: #fff;
-    padding: 18px 20px;
-    border-radius: 12px;
-    border: 1px solid #E7E5DC;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.02);
-  }
-  .comment-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 8px;
-  }
-  .comment-author {
-    font-weight: 700;
-    color: var(--navy-deep);
-    font-size: 1rem;
-  }
-  .comment-date {
-    font-size: 0.78rem;
-    color: var(--ink-soft);
-    font-family: 'IBM Plex Sans Arabic';
-  }
-  .comment-body {
-    color: var(--ink);
-    font-size: 0.93rem;
-    line-height: 1.6;
-  }
-  .comment-stars {
-    color: var(--gold);
-    font-size: 0.9rem;
-    margin-top: 4px;
   }
 
   /* ---------- contact ---------- */
@@ -772,42 +708,23 @@
   </div>
 </section>
 
-<!-- ============ COMMENTS SECTION ============ -->
+<!-- ============ COMMENTS SECTION (CUSDIS INTEGRATED) ============ -->
 <section id="comments" class="comments-section">
   <div class="wrap">
     <p class="kicker">تعليقات الزوار</p>
-    <h2 class="sec-title reveal">شاركنا رأيك أو استفسارك</h2>
-    <p class="sec-sub reveal">اكتب تعليقك ليظهر مباشرة في الموقع هنا.</p>
+    <h2 class="sec-title reveal">شاركونا رأيكم أو استفساراتكم</h2>
+    <p class="sec-sub reveal">اكتب تعليقك وسيكون مرئياً لجميع زوار الموقع.</p>
 
     <div class="comment-box-wrap reveal">
-      <form id="commentForm">
-        <div class="field">
-          <label>الاسم الكريم</label>
-          <input type="text" id="commenterName" placeholder="أدخل اسمك هنا..." required>
-        </div>
-        
-        <div class="field">
-          <label>التقييم (اختياري)</label>
-          <div class="rating-select" id="ratingStars">
-            <span data-value="5">★</span>
-            <span data-value="4">★</span>
-            <span data-value="3">★</span>
-            <span data-value="2">★</span>
-            <span data-value="1">★</span>
-          </div>
-        </div>
-
-        <div class="field">
-          <label>التعليق أو الملاحظة</label>
-          <textarea id="commentText" placeholder="اكتب رأيك أو اقتراحك أو استفسارك هنا..." required></textarea>
-        </div>
-        <button type="submit" class="comment-btn-submit">✍️ نشر التعليق على الموقع</button>
-      </form>
-
-      <!-- شاشة عرض التعليقات -->
-      <div class="comments-list" id="commentsList">
-        <!-- يتم تحميل التعليقات تلقائياً بواسطة JavaScript -->
-      </div>
+      <!-- Cusdis Widget -->
+      <div id="cusdis_thread"
+        data-host="https://cusdis.com"
+        data-app-id="836e41bb-1b4a-4c0f-bb3d-e64510f15693"
+        data-page-id="haqibat-altaleb-home"
+        data-page-url="https://haqibat-altaleb.github.io/"
+        data-page-title="حقيبة الطالب - الرئيسية"
+      ></div>
+      <script async defer src="https://cusdis.com/js/cusdis.es.js"></script>
     </div>
   </div>
 </section>
@@ -935,87 +852,6 @@
 
   const targetPhone = "966591266141";
   const targetEmail = "dahansoliman3@gmail.com";
-
-  /* ==================== برمجية قسم التعليقات المحدثة ==================== */
-  let selectedRating = 5;
-  const ratingStars = document.querySelectorAll('#ratingStars span');
-  
-  ratingStars.forEach(star => {
-    star.addEventListener('click', function() {
-      selectedRating = parseInt(this.getAttribute('data-value'));
-      ratingStars.forEach(s => {
-        if(parseInt(s.getAttribute('data-value')) <= selectedRating) {
-          s.classList.add('active');
-        } else {
-          s.classList.remove('active');
-        }
-      });
-    });
-  });
-
-  // تعليقات افتراضية يتم عرضها أول مرة
-  const initialComments = [
-    { name: "خالد الغامدي", comment: "ما شاء الله تبارك الله، سرعة ودقة في تنفيذ دروع التكريم، شكراً لكم.", rating: 5, date: "2026-02-10" },
-    { name: "أم فهد", comment: "تعامل ممتاز جداً وتصميم الكريليك طلع أجمل مما توقعت.", rating: 5, date: "2026-01-28" }
-  ];
-
-  function getStoredComments() {
-    const saved = localStorage.getItem('site_comments');
-    return saved ? JSON.parse(saved) : initialComments;
-  }
-
-  function renderComments() {
-    const comments = getStoredComments();
-    const commentsList = document.getElementById('commentsList');
-    commentsList.innerHTML = '';
-
-    comments.forEach(c => {
-      const item = document.createElement('div');
-      item.className = 'comment-item';
-      const starsStr = '★'.repeat(c.rating || 5);
-      
-      item.innerHTML = `
-        <div class="comment-head">
-          <span class="comment-author">${escapeHtml(c.name)}</span>
-          <span class="comment-date">${c.date}</span>
-        </div>
-        <div class="comment-stars">${starsStr}</div>
-        <div class="comment-body">${escapeHtml(c.comment)}</div>
-      `;
-      commentsList.appendChild(item);
-    });
-  }
-
-  function escapeHtml(text) {
-    return text.replace(/[&<>"']/g, function(m) {
-      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m];
-    });
-  }
-
-  // عرض التعليقات عند تحميل الصفحة
-  renderComments();
-
-  // معالجة تقديم التعليق (نشر فقط داخل الموقع بدون الواتساب)
-  document.getElementById('commentForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const name = document.getElementById('commenterName').value;
-    const comment = document.getElementById('commentText').value;
-    const today = new Date().toISOString().split('T')[0];
-
-    // إضافة التعليق محلياً وتخزينه
-    const comments = getStoredComments();
-    comments.unshift({ name: name, comment: comment, rating: selectedRating, date: today });
-    localStorage.setItem('site_comments', JSON.stringify(comments));
-
-    // إعادة عرض قائمة التعليقات مباشرة
-    renderComments();
-
-    alert('شكراً لك! تم نشر تعليقك بنجاح.');
-
-    // إعادة تعيين الحقول
-    document.getElementById('commentForm').reset();
-    ratingStars.forEach(s => s.classList.remove('active'));
-  });
 
   /* ==================== برمجية طلب الخدمات ==================== */
   document.getElementById('orderForm').addEventListener('submit', function(e) {
